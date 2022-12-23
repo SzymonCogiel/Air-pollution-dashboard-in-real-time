@@ -10,7 +10,7 @@ import logging
 from arcgis.gis import GIS
 from arcgis.features import FeatureLayerCollection
 import time
-
+from tqdm import tqdm
 
 arcgis_user = os.environ.get('ArcGIS_USER', '')
 arcgis_pass = os.environ.get('ArcGIS_PASS', '')
@@ -40,7 +40,7 @@ if __name__ == '__main__':
     # dic = r.json()
     pomiarowe_PM10 = pd.DataFrame({})
     pomiarowe_CO = pd.DataFrame({})
-    for sid in stacje['id']:
+    for sid in tqdm(stacje['id']):
         # get Stanowiska pomiarowe
         r = requests.get('https://api.gios.gov.pl/pjp-api/rest/station/sensors/{0}'.format(sid))
         stanowiska_pomiarowe = r.json()
@@ -53,9 +53,9 @@ if __name__ == '__main__':
         #
         # print(indeks_jakosci_powietrza)
     print("---FIRST STAGE DOWNL IN %s seconds ---" % (time.time() - start_time))
-    print(len(stanowiska['id'].unique()))
-    i = 1
-    for sen_id in stanowiska['id'].unique()[:400]:
+    # print(len(stanowiska['id'].unique()))
+    # i = 1
+    for sen_id in tqdm(stanowiska['id'].unique()):
 
         r = requests.get('https://api.gios.gov.pl/pjp-api/rest/data/getData/{0}'.format(sen_id))
         dane_pomiarowe = r.json()
@@ -80,8 +80,8 @@ if __name__ == '__main__':
             except Exception as e:
                 logger.error(e)
 
-        print(i)
-        i += 1
+        # print(i)
+        # i += 1
 
     print("---LAST STAGE DOWNL IN %s seconds ---" % (time.time() - start_time))
 
