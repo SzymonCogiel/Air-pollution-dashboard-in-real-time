@@ -31,9 +31,16 @@ if __name__ == '__main__':
     now = datetime.datetime.now()
 
     stanowiska = pd.json_normalize({
-        'id': 806, 'stationId': 142,
-        'param': {'paramName': 'tlenek węgla', 'paramFormula': 'CO', 'paramCode': 'CO', 'idParam': 8}
-    })
+        'id': 806,
+        'stationId': 142,
+        'param': {
+            'paramName': 'tlenek węgla',
+            'paramFormula': 'CO',
+            'paramCode': 'CO',
+            'idParam': 8}
+        }
+    )
+    
     pomiarowe_PM10 = pd.DataFrame({})
     pomiarowe_CO = pd.DataFrame({})
 
